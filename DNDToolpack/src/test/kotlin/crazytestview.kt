@@ -25,12 +25,10 @@ class crazytestview : View("My View") {
     }
 
     fun increment(){
-
-        if(counter.value > 1.0){
-            counter.value = 0.0
-            println("reset!")
-        }
-        else counter.value += 0.1
+        counter.value += 0.1
+        println("${counter.value}")
+        if((counter.value > 0.9) && (counter.value < 1.0)) counter.value = 1.0
+        if (counter.value > 1.0) counter.value = 0.0
     }
 
 
