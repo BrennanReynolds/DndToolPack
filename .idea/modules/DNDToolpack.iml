@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="DNDToolpack" external.linked.project.path="$MODULE_DIR$/../../DNDToolpack" external.root.project.path="$MODULE_DIR$/../../DNDToolpack" external.system.id="GRADLE" external.system.module.group="Brennan-Connor_INC" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../DNDToolpack">
+      <excludeFolder url="file://$MODULE_DIR$/../../DNDToolpack/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../DNDToolpack/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../DNDToolpack/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
