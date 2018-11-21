@@ -7,4 +7,6 @@ import tornadofx.*
 
 class crazytestview : View("My View") {
     override val root : AnchorPane by fxml()
+
+
 }
