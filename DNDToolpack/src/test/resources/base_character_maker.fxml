@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab text="Name and Race">
+      <content>
+        <AnchorPane fx:id="race_name_page" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text fx:id="selected_creature" layoutX="316.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pick Someone" wrappingWidth="276.611328125">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="new_creature" layoutX="14.0" layoutY="24.0" mnemonicParsing="false" text="New Creature" />
+                  <ListView fx:id="creature_name_list" layoutX="103.0" layoutY="24.0" prefHeight="200.0" prefWidth="200.0" />
+                  <Button fx:id="delete_button" layoutY="49.0" mnemonicParsing="false" onAction="#remove_creature" prefHeight="25.0" prefWidth="103.0" text="Delete Creature" />
+                  <ComboBox fx:id="race_selector" layoutX="303.0" layoutY="112.0" prefWidth="150.0" promptText="select race" />
+                  <ComboBox fx:id="subrace_selector" layoutX="454.0" layoutY="112.0" prefHeight="25.0" prefWidth="112.0" />
+                  <Label layoutX="303.0" layoutY="82.0" text="Race">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Background">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+      <Tab text="Untitled Tab 1">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
