@@ -1,0 +1,3 @@
+Orc, Big, Small
+Human, Pretty, Ugly
+Elf, Wood, High
