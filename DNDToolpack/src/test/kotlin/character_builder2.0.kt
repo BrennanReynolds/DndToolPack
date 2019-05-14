@@ -1,3 +1,4 @@
+import com.intellij.configurationStore.getPaths
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.control.*
@@ -19,13 +20,15 @@ class character_builder20: View() {
     val race_chosen: Label by fxid()
     val subrace_chosen: Label by fxid()
 
-    val character_list: ChoiceBox<String> by fxid()
+    val character_box: ChoiceBox<String> by fxid()
 
 
     init {
 
         newcharacter_button.setOnAction { openInternalWindow<name_creature>() }
         racechange_button.setOnAction { openInternalWindow<race_picker>() }
+        characterselect_button.setOnAction { controller.select_creature() }
+        subracechange_button.setOnAction { openInternalWindow<subrace_picker>() }
 
 
     }
@@ -73,37 +76,115 @@ class character_builder20: View() {
 
         init {
 
+            race_selector.items.clear()
+
+
             race_selector.items.addAll(controller.race_list)
 
-            raceselector_button.setOnAction { controller.add_race(race_selector.selectionModel.selectedItem.toString()) }
+
+
+            raceselector_button.setOnAction { go() }
+        }
+        fun go(){
+            controller.add_race(race_selector.selectionModel.selectedItem.toString())
+            race_selector.selectionModel.clearSelection()
+            close()
         }
     }
 
-        class MyController : Controller() {
-            val mainpage: character_builder20 by inject()
-            var character_list: MutableList<Creature> = mutableListOf()
-            val race_list = mutableListOf<String>()
-            val currentCreature = SimpleIntegerProperty()
-            var current: Int by currentCreature
+    class subrace_picker(val subracelist: MutableList<String>) : View() {
 
-            init{
+        override val root: Pane by fxml()
+        val subrace_selector: ChoiceBox<String> by fxid()
+        val subraceselector_button: Button by fxid()
+        val controller: MyController by inject()
 
-                File("races.txt").readLines().forEach{
+        init {
 
-                    race_list.add(it)
+            subraceselector_button.setOnAction { go() }
+        }
+
+
+
+        fun go(){
+            controller.add_subrace(subrace_selector.selectionModel.selectedItem.toString())
+            subrace_selector.selectionModel.clearSelection()
+            close()
+        }
+    }
+
+
+    class MyController : Controller() {
+        val mainpage: character_builder20 by inject()
+        var character_list: MutableList<Creature> = mutableListOf()
+        val race_list = mutableListOf<String>()
+        var currentCreature = SimpleIntegerProperty()
+        var current: Int by currentCreature
+
+        init{
+
+                print((File(".").absolutePath))
+
+                File(".\\DNDToolpack\\src\\test\\resources\\races.txt").readLines().forEach{
+
+                    var result: List<String> = it.split(",").map { it.trim() }
+
+
+
+                   race_list.add(result[0])
                 }
+            
             }
 
 
             fun add_name(input: String) {
 
                 character_list.add(Creature(input, "not picked", "not picked"))
-                mainpage.character_list.items.add(character_list.last().stringout())
+                mainpage.character_box.items.add(character_list.last().stringout())
 
 
             }
             fun add_race(input: String){
 
+                character_list[currentCreature.value].raceProperty.set(input)
+                mainpage.character_box.items[currentCreature.value] = character_list[currentCreature.value].stringout()
+
+
+            }
+
+            fun select_creature(){
+
+                currentCreature.set(mainpage.character_box.selectionModel.selectedIndex)
+                print(currentCreature)
+                mainpage.race_chosen.text = character_list[currentCreature.value].race
+
+                }
+
+            fun subrace_list_builder():MutableList<String>{
+
+                val subrace_list = mutableListOf<String>()
+
+                File(".\\DNDToolpack\\src\\test\\resources\\races.txt").readLines().forEach{
+
+                    var result: List<String> = it.split(",").map { it.trim() }
+
+                    if(result[0]==character_list[currentCreature.value].race){
+
+                        for (i in 1..(result.size-1)) subrace_list.add(result[i])
+                    }
+
+
+
+
+                }
+                print(subrace_list)
+                return subrace_list
+            }
+
+            fun add_subrace(input: String){
+
+                character_list[currentCreature.value].subraceProperty.set(input)
+                mainpage.character_box.items[currentCreature.value] = character_list[currentCreature.value].stringout()
 
             }
 
