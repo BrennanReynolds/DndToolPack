@@ -14,6 +14,7 @@ class character_builder20: View() {
 
     val characterselect_button: Button by fxid()
     val newcharacter_button: Button by fxid()
+    val deletecharacter_button: Button by fxid()
     val racechange_button: Button by fxid()
     val subracechange_button: Button by fxid()
     val controller: MyController by inject()
@@ -30,6 +31,7 @@ class character_builder20: View() {
         racechange_button.setOnAction { openInternalWindow<race_picker>() }
         characterselect_button.setOnAction { controller.select_creature() }
         subracechange_button.setOnAction { openInternalWindow<subrace_picker>() }
+        deletecharacter_button.setOnAction { controller.delete_character() }
 
 
     }
@@ -68,7 +70,7 @@ class character_builder20: View() {
 
     }
 
-    class race_picker : View() {
+    class race_picker : Fragment() {
 
         override val root: Pane by fxml()
         val race_selector: ChoiceBox<String> by fxid()
@@ -78,9 +80,8 @@ class character_builder20: View() {
         init {
 
             race_selector.items.clear()
-
-
             race_selector.items.addAll(controller.race_list)
+            race_selector.selectionModel.select(controller.currentCreatureRace())
 
 
 
@@ -153,11 +154,24 @@ class character_builder20: View() {
 
 
             }
+
+            fun delete_character(){
+
+                character_list.removeAt(currentCreature.value)
+                mainpage.character_box.items.clear()
+                for(i in 0..character_list.lastIndex){
+                    mainpage.character_box.items.add(character_list[i].stringout())
+                }
+                mainpage.currentCreature_label.text = "None"
+                select_creature()
+
+            }
             fun add_race(input: String){
 
                 if(input!=character_list[currentCreature.value].race){
 
                     character_list[currentCreature.value].subraceProperty.set("Generic")
+                    mainpage.subrace_chosen.text = character_list[currentCreature.value].subrace
                 }
 
                 character_list[currentCreature.value].raceProperty.set(input)
@@ -168,13 +182,28 @@ class character_builder20: View() {
 
             }
 
+            fun currentCreatureRace(): Int{
+
+                var out = 0
+
+                for(i in 0..race_list.lastIndex){
+
+                    if(character_list[currentCreature.value].race == race_list[i]) out=i
+                }
+                return out
+            }
+
             fun select_creature(){
 
-                currentCreature.set(mainpage.character_box.selectionModel.selectedIndex)
+                if(mainpage.character_box.selectionModel.isEmpty) currentCreature.set(0)
+                else {
+                    currentCreature.set(mainpage.character_box.selectionModel.selectedIndex)
+                }
                 print(currentCreature)
                 mainpage.race_chosen.text = character_list[currentCreature.value].race
                 mainpage.subrace_chosen.text = character_list[currentCreature.value].subrace
                 mainpage.currentCreature_label.text = "Current: " + character_list[currentCreature.value].name
+                mainpage.character_box.selectionModel.select(currentCreature.value)
 
                 }
 

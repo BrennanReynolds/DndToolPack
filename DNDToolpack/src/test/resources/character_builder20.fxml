@@ -41,6 +41,7 @@
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
+                  <Button fx:id="deletecharacter_button" layoutX="492.0" layoutY="39.0" mnemonicParsing="false" text="Delete Character" />
                </children></AnchorPane>
       </content>
     </Tab>
