@@ -19,6 +19,7 @@ class character_builder20: View() {
     val controller: MyController by inject()
     val race_chosen: Label by fxid()
     val subrace_chosen: Label by fxid()
+    val currentCreature_label: Label by fxid()
 
     val character_box: ChoiceBox<String> by fxid()
 
@@ -147,6 +148,8 @@ class character_builder20: View() {
 
                 character_list.add(Creature(input, "Creature", "Generic"))
                 mainpage.character_box.items.add(character_list.last().stringout())
+                mainpage.character_box.selectionModel.selectLast()
+                select_creature()
 
 
             }
@@ -159,6 +162,8 @@ class character_builder20: View() {
 
                 character_list[currentCreature.value].raceProperty.set(input)
                 mainpage.character_box.items[currentCreature.value] = character_list[currentCreature.value].stringout()
+                mainpage.race_chosen.text = input
+                mainpage.character_box.selectionModel.select(currentCreature.value)
 
 
             }
@@ -169,6 +174,7 @@ class character_builder20: View() {
                 print(currentCreature)
                 mainpage.race_chosen.text = character_list[currentCreature.value].race
                 mainpage.subrace_chosen.text = character_list[currentCreature.value].subrace
+                mainpage.currentCreature_label.text = "Current: " + character_list[currentCreature.value].name
 
                 }
 
@@ -198,6 +204,7 @@ class character_builder20: View() {
                 character_list[currentCreature.value].subraceProperty.set(input)
                 mainpage.character_box.items[currentCreature.value] = character_list[currentCreature.value].stringout()
                 mainpage.subrace_chosen.text = input
+                mainpage.character_box.selectionModel.select(currentCreature.value)
 
             }
 
