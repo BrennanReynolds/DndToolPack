@@ -92,7 +92,7 @@ class character_builder20: View() {
         }
     }
 
-    class subrace_picker(val subracelist: MutableList<String>) : View() {
+    class subrace_picker : Fragment() {
 
         override val root: Pane by fxml()
         val subrace_selector: ChoiceBox<String> by fxid()
@@ -102,6 +102,12 @@ class character_builder20: View() {
         init {
 
             subraceselector_button.setOnAction { go() }
+            subrace_selector.items.addAll(controller.subrace_list_builder())
+            for(i in (0..subrace_selector.items.size-1)){
+                if(subrace_selector.items[i]== controller.character_list[controller.currentCreature.value].subrace){
+                    subrace_selector.selectionModel.select(i)
+                }
+            }
         }
 
 
@@ -139,12 +145,17 @@ class character_builder20: View() {
 
             fun add_name(input: String) {
 
-                character_list.add(Creature(input, "not picked", "not picked"))
+                character_list.add(Creature(input, "Creature", "Generic"))
                 mainpage.character_box.items.add(character_list.last().stringout())
 
 
             }
             fun add_race(input: String){
+
+                if(input!=character_list[currentCreature.value].race){
+
+                    character_list[currentCreature.value].subraceProperty.set("Generic")
+                }
 
                 character_list[currentCreature.value].raceProperty.set(input)
                 mainpage.character_box.items[currentCreature.value] = character_list[currentCreature.value].stringout()
@@ -157,6 +168,7 @@ class character_builder20: View() {
                 currentCreature.set(mainpage.character_box.selectionModel.selectedIndex)
                 print(currentCreature)
                 mainpage.race_chosen.text = character_list[currentCreature.value].race
+                mainpage.subrace_chosen.text = character_list[currentCreature.value].subrace
 
                 }
 
@@ -185,6 +197,7 @@ class character_builder20: View() {
 
                 character_list[currentCreature.value].subraceProperty.set(input)
                 mainpage.character_box.items[currentCreature.value] = character_list[currentCreature.value].stringout()
+                mainpage.subrace_chosen.text = input
 
             }
 
